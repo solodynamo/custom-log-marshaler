@@ -21,7 +21,7 @@ Closest one is https://github.com/muroon/zmlog and its helpful but few things th
 Zerolog
 
 ```
-go install github.com/solodynamo/pii-marshaler
+go install github.com/solodynamo/custom-log-marshaler
 pii-marshaler -f "path to go file" -lib zerolog
 
 ```
@@ -29,7 +29,7 @@ pii-marshaler -f "path to go file" -lib zerolog
 Uber Zap(by default)
 
 ```
-go install github.com/solodynamo/pii-marshaler
+go install github.com/solodynamo/custom-log-marshaler
 pii-marshaler -f "path to go file" 
 
 ```

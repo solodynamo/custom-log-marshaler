@@ -1,4 +1,4 @@
-module github.com/solodynamo/pii-marshaler
+module github.com/solodynamo/custom-log-marshaler
 
 go 1.19
 

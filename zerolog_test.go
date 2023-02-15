@@ -3,7 +3,7 @@ package main
 import (
 	"testing"
 
-	"github.com/solodynamo/pii-marshaler/fixtures"
+	"github.com/solodynamo/custom-log-marshaler/fixtures"
 	"github.com/stretchr/testify/assert"
 )
 
