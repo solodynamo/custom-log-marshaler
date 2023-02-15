@@ -1,6 +1,11 @@
 # Custom Log Marshaler
 Generates PII containing logics for popular logging libs like zap, zerolog.
 
+# How?
+Every lgging package in Go have a way to override default marshaling function used to log, this package generates that custom function with some super powers like excluding fields(for PII, not required stuff).
+
+If you send less data, ingestion bandwidth is used less so this also leads to lesser costs in longer run.
+
 # Why? 
 Couldn't find any packages which help me generate such logics in bulk and flexible enough to use with different logging libs. 
 
