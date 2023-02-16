@@ -2,7 +2,7 @@
 Generates PII containing logics for popular logging libs like zap, zerolog.
 
 # How?
-Every lgging package in Go have a way to override default marshaling function used to log, this package generates that custom function with some super powers like excluding fields(for PII, not required stuff).
+In most Go logging libs there is a way to override default marshaling function used to "log" to stdout, this package generates that custom function with some super powers like excluding fields(for PII, not required stuff).
 
 If you send less data, ingestion bandwidth is used less so this also leads to lesser costs in longer run.
 
@@ -22,7 +22,7 @@ Zerolog
 
 ```
 go install github.com/solodynamo/custom-log-marshaler
-pii-marshaler -f "path to go file" -lib zerolog
+custom-log-marshaler -f "path to go file" -lib zerolog
 
 ```
 
@@ -30,7 +30,7 @@ Uber Zap(by default)
 
 ```
 go install github.com/solodynamo/custom-log-marshaler
-pii-marshaler -f "path to go file" 
+custom-log-marshaler -f "path to go file"
 
 ```
 
@@ -48,4 +48,4 @@ type User struct {
 
 In above case, only name will be logged!
 
-See working examples in fixtuers.
+See working examples in fixtures.
