@@ -60,10 +60,6 @@ func (l %s) MarshalLogObject(enc zapcore.ObjectEncoder) error {
 // https://github.com/uber-go/zap/blob/master/zapcore/encoder.go#L349
 func (uz *UberZap) GetLibFunc(typeName string) string {
 	switch typeName {
-	case "zapcore.ObjectMarshaler":
-		return "AddObject"
-	case "zapcore.ArrayMarshaler":
-		return "AddArray"
 	case "bool":
 		return "AddBool"
 	case "*bool":
@@ -142,7 +138,11 @@ func (uz *UberZap) GetLibFunc(typeName string) string {
 		return "AddDuration"
 	case "*time.Duration":
 		return "AddDuration"
-	default:
+	case "reflection":
 		return "AddReflected"
+	case "[]":
+		return "AddArray"
+	default:
+		return "AddObject"
 	}
 }

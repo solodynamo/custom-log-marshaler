@@ -25,7 +25,7 @@ func getFields(f *ast.File, loglib PIIMarshaler) ([]string, map[string][]field) 
 				}
 				structName := typeSpec.Name.String()
 				structs = append(structs, structName)
-				fields := make([]field, 0)
+				fields := make([]field, 0, len(structType.Fields.List))
 				for _, fi := range structType.Fields.List {
 					fie := field{}
 					isLoggable := true
@@ -54,7 +54,6 @@ func getFields(f *ast.File, loglib PIIMarshaler) ([]string, map[string][]field) 
 								fie.typeName = x.Name
 							}
 
-							// pkg.Struct(time.Timeなど)
 							if cty, ok := ty.X.(*ast.SelectorExpr); ok {
 								if x, ok := cty.X.(*ast.Ident); ok {
 									fie.pkgName = x.Name
@@ -85,6 +84,16 @@ func getFields(f *ast.File, loglib PIIMarshaler) ([]string, map[string][]field) 
 							}
 
 							fie.typeName = ty.Sel.Name
+						}
+
+						if _, ok := fi.Type.(*ast.MapType); ok {
+							// force reflection
+							fie.typeName = "reflection"
+						}
+
+						if _, ok := fi.Type.(*ast.SliceExpr); ok {
+							// force reflection
+							fie.typeName = "reflection"
 						}
 					}
 					fie.zapFunc = loglib.GetLibFunc(fie.allTypeName())

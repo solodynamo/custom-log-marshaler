@@ -35,7 +35,7 @@ func (f field) allTypeName() string {
 	case ptr:
 		n = fmt.Sprintf("*%s", n)
 	case slice:
-		n = fmt.Sprintf("[]%s", n)
+		n = "[]"
 	}
 	return n
 }

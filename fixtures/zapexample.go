@@ -8,6 +8,7 @@ type User struct {
 
 type UserDetailsResponse struct {
 	User
-	RequestID string `json:"rid"`
-	FromCache bool   `json:"fromCache"`
+	RequestID string   `json:"rid"`
+	FromCache bool     `json:"fromCache"`
+	Metadata  []string `json:"md"`
 }
