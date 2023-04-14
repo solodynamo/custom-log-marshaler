@@ -47,6 +47,7 @@ Closest one is https://github.com/muroon/zmlog and its helpful but few things th
 1. Generate custom functions in the same file as struct, better readability and maintainance. 
 2. Extensible to other logging libs.
 3. Specify what to log using struct tags, this can help contain PII info. Also save on log ingestion costs.
+4. Handle pointer dereferencing.
 
 
 # Usage

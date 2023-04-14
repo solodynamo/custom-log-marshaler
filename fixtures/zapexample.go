@@ -1,9 +1,9 @@
 package fixtures
 
 type User struct {
-	Name    string `json:"name"`
-	Email   string `notloggable`
-	Address string `json:"address", notloggable`
+	Name    *string `json:"name"`
+	Email   string  `notloggable`
+	Address string  `json:"address", notloggable`
 }
 
 type UserDetailsResponse struct {
