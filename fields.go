@@ -73,3 +73,8 @@ func (f field) ParamValue() string {
 	str := fmt.Sprintf("%s(\"%s\", %s)", f.zapFunc, f.getKey(), fieldName)
 	return str
 }
+
+func (f field) FieldNameWithoutAestrix() string {
+	fieldName := fmt.Sprintf("l.%s", f.getFieldName())
+	return fieldName
+}

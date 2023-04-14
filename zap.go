@@ -10,6 +10,17 @@ type UberZap struct {
 
 var _ PIIMarshaler = &UberZap{}
 
+var (
+	baseFormat = `// MarshalLogObject ...
+func (l %s) MarshalLogObject(enc zapcore.ObjectEncoder) error {
+%s	
+}
+`
+	ptrFieldFormat = "if %s != nil { enc.%s }"
+	indent         = "\t"
+	newLine        = "\n"
+)
+
 func (uz *UberZap) Generate(structs []string, structFields map[string][]field) string {
 	if len(structs) == 0 {
 		return ""
@@ -36,25 +47,27 @@ func (uz *UberZap) generateStructData(structName string, structFields map[string
 		return ""
 	}
 
-	format := `// MarshalLogObject ...
-func (l %s) MarshalLogObject(enc zapcore.ObjectEncoder) error {
-%s	
-}
-`
-	indent := "\t"
-	newLine := "\n"
-
-	targetFields := make([]string, 0, len(structFields[structName])+2)
+	var (
+		exe          string
+		val          string
+		targetFields = make([]string, 0, len(structFields[structName])+2)
+	)
 
 	for _, fie := range structFields[structName] {
-		exe := fmt.Sprintf("enc.%s", fie.ParamValue())
-		val := fmt.Sprintf("%s%s%s%s", indent, indent, exe, newLine)
+		switch fie.fieldType {
+		case ptr:
+			exe = fmt.Sprintf(ptrFieldFormat, fie.FieldNameWithoutAestrix(), fie.ParamValue())
+			val = fmt.Sprintf("%s%s%s%s", indent, indent, exe, newLine)
+		default:
+			exe = fmt.Sprintf("enc.%s", fie.ParamValue())
+			val = fmt.Sprintf("%s%s%s%s", indent, indent, exe, newLine)
+		}
 		targetFields = append(targetFields, val)
 	}
 	suffix := fmt.Sprintf("%s%sreturn nil", indent, indent)
 	targetFields = append(targetFields, suffix)
 
-	return fmt.Sprintf(format, structName, strings.Join(targetFields, ""))
+	return fmt.Sprintf(baseFormat, structName, strings.Join(targetFields, ""))
 }
 
 // https://github.com/uber-go/zap/blob/master/zapcore/encoder.go#L349
