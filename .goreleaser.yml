@@ -23,10 +23,16 @@ brews:
     tap:
       owner: solodynamo
       name: homebrew-tap
+      token: "{{ .Env.GH_PAT }}"
+    folder: Formula
     homepage: https://github.com/solodynamo/custom-log-marshaler
     description: Attempt to R.I.P PII or unnecessary info in logs and reduce log ingestion costs in the process.
+    license: MIT
     commit_author:
       name: Ankit Singh
       email: reachout@githubprofileblog
+    skip_upload: false
+    test: |
+      system "#{bin}/custom-log-marshaler version"
     install: |
       bin.install "custom-log-marshaler"
