@@ -2,7 +2,7 @@
 project_name: custom-log-marshaler
 builds:
   - id: custom-log-marshaler
-    main: ./main.go
+    main: .
     goos:
       - darwin
       - linux
