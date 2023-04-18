@@ -1,0 +1,43 @@
+before:
+  hooks:
+    # You may remove this if you don't use go modules.
+    - go mod tidy
+    # you may remove this if you don't need go generate
+    - go generate ./...
+builds:
+  - dir: .
+    env:
+      - CGO_ENABLED=0
+    goos:
+      - linux
+      - darwin
+    goarch:
+      - amd64
+      - arm
+      - arm64
+    goarm:
+      - 7
+archives:
+  - replacements:
+      darwin: Darwin
+      linux: Linux
+      386: i386
+      amd64: x86_64
+checksum:
+  name_template: 'checksums.txt'
+snapshot:
+  name_template: "{{ incpatch .Version }}-next"
+changelog:
+  sort: asc
+  filters:
+    exclude:
+      - '^docs:'
+      - '^test:'
+brews:
+  - tap:
+      owner: solodynamo
+      name: custom-log-marshaler
+    folder: Formula
+    homepage: 'https://github.com/solodynamo/custom-log-marshaler'
+    description: 'R.I.P PII or unnecessary info in logs and reduce log ingestion costs in the process'
+    license: "MIT"

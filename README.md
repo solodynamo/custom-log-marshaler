@@ -1,6 +1,16 @@
 # Custom Log Marshaler
 "Don't log any data that is unnecessary or should not be logged in the first place." 
 
+<p align="center">
+  <a href="https://goreportcard.com/report/github.com/solodynamo/custom-log-marshaler">
+    <img src="https://goreportcard.com/badge/github.com/solodynamo/custom-log-marshaler" />
+  </a>
+  <a href="https://github.com/solodynamo/custom-log-marshaler/releases">
+    <img src="https://img.shields.io/github/release/solodynamo/custom-log-marshaler.svg" />
+  </a>
+  <img src="https://github.com/solodynamo/custom-log-marshaler/actions/workflows/test.yaml/badge.svg" />
+</p>
+
 # How?
 In most Go logging libs there is a way to override default marshaling function used to "log" to stdout, this package generates that custom function with some super powers like excluding fields(for PII, not required stuff).
 
