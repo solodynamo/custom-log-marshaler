@@ -19,6 +19,14 @@ archives:
       - goos: windows
         format: zip
 brews:
-  - tap:
+  - name: custom-log-marshaler
+    tap:
       owner: solodynamo
-      name: custom-log-marshaler
+      name: homebrew-tap
+    homepage: https://github.com/solodynamo/custom-log-marshaler
+    description: Attempt to R.I.P PII or unnecessary info in logs and reduce log ingestion costs in the process.
+    commit_author:
+      name: Ankit Singh
+      email: reachout@githubprofileblog
+    install: |
+      bin.install "custom-log-marshaler"
