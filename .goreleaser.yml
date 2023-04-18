@@ -1,14 +1,18 @@
 # .goreleaser.yml
 project_name: custom-log-marshaler
 builds:
-  - id: custom-log-marshaler
-    main: .
+  - dir: .
+    env:
+      - CGO_ENABLED=0
     goos:
-      - darwin
       - linux
-      - windows
+      - darwin
     goarch:
       - amd64
+      - arm
+      - arm64
+    goarm:
+      - "7"
 archives:
   - id: archive
     format_overrides:
