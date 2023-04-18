@@ -21,4 +21,4 @@ archives:
 brews:
   - tap:
       owner: solodynamo
-      name: homebrew-tap
+      name: custom-log-marshaler
