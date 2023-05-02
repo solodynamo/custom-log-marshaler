@@ -6,9 +6,18 @@ type User struct {
 	Address string  `json:"address", notloggable`
 }
 
+type Translation struct {
+	Language    string `json:"language,omitempty"`
+	Translation string `json:"translation"`
+}
+
+type customType map[string]string
+type number int
+
 type UserDetailsResponse struct {
 	User
-	RequestID string   `json:"rid"`
-	FromCache bool     `json:"fromCache"`
-	Metadata  []string `json:"md"`
+	FromCache    bool          `json:"fromCache"`
+	Translations []Translation `json:"translations"`
+	Metadata     customType    `json:"metadata"`
+	No           number        `json:"no"`
 }

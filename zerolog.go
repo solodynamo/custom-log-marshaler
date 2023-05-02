@@ -36,6 +36,12 @@ func (zl *ZeroLog) generateStructData(structName string, structFields map[string
 		return ""
 	}
 
+	var (
+		exe          string
+		val          string
+		targetFields = make([]string, 0, len(structFields[structName])+2)
+	)
+
 	format := `// MarshalZerologObject ...
 func (l %s) MarshalZerologObject(enc *zerolog.Event) error {
 %s	
@@ -44,11 +50,15 @@ func (l %s) MarshalZerologObject(enc *zerolog.Event) error {
 	indent := "\t"
 	newLine := "\n"
 
-	targetFields := make([]string, 0, len(structFields[structName])+2)
-
 	for _, fie := range structFields[structName] {
-		exe := fmt.Sprintf("enc.%s", fie.ParamValue())
-		val := fmt.Sprintf("%s%s%s%s", indent, indent, exe, newLine)
+		switch fie.fieldType {
+		case ptr:
+			exe = fmt.Sprintf(ptrFieldFormat, fie.FieldNameWithoutAestrix(), fie.ParamValue())
+			val = fmt.Sprintf("%s%s%s%s", indent, indent, exe, newLine)
+		default:
+			exe = fmt.Sprintf("enc.%s", fie.ParamValue())
+			val = fmt.Sprintf("%s%s%s%s", indent, indent, exe, newLine)
+		}
 		targetFields = append(targetFields, val)
 	}
 	suffix := fmt.Sprintf("%s%sreturn nil", indent, indent)
@@ -128,6 +138,8 @@ func (zl *ZeroLog) GetLibFunc(typeName string) string {
 		return "Dur"
 	case "*time.Duration":
 		return "Dur"
+	case customStruct:
+		return "Object"
 	default:
 		return "Interface"
 
