@@ -21,7 +21,7 @@ type field struct {
 	pkgName   string
 	typeName  string
 	fieldType fieldType
-	zapFunc   string
+	libFunc   string
 }
 
 func (f field) allTypeName() string {
@@ -45,23 +45,11 @@ func (f field) isEmbedded() bool {
 }
 
 func (f field) getKey() string {
-	key := ""
-	if f.isEmbedded() {
-		if f.pkgName != "" {
-			key = fmt.Sprintf("%s.%s", f.pkgName, f.typeName)
-		} else {
-			key = f.typeName
-		}
-	} else {
-		key = f.key
-	}
+	key := f.key
 	return strcase.ToSnake(key)
 }
 
 func (f field) getFieldName() string {
-	if f.isEmbedded() {
-		return f.typeName
-	}
 	return f.fieldName
 }
 
@@ -70,7 +58,7 @@ func (f field) ParamValue() string {
 	if f.fieldType == ptr {
 		fieldName = fmt.Sprintf("*l.%s", f.getFieldName())
 	}
-	str := fmt.Sprintf("%s(\"%s\", %s)", f.zapFunc, f.getKey(), fieldName)
+	str := fmt.Sprintf("%s(\"%s\", %s)", f.libFunc, f.getKey(), fieldName)
 	return str
 }
 

@@ -155,7 +155,9 @@ func (uz *UberZap) GetLibFunc(typeName string) string {
 		return "AddReflected"
 	case "[]":
 		return "AddArray"
-	default:
+	case customStruct:
 		return "AddObject"
+	default:
+		return "AddReflected"
 	}
 }
