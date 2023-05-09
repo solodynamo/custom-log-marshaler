@@ -38,17 +38,15 @@ func getFields(f *ast.File, loglib PIIMarshaler) ([]string, map[string][]field) 
 				structName := typeSpec.Name.String()
 				structs = append(structs, structName)
 				fields := make([]field, 0, len(structType.Fields.List))
-				for _, fi := range structType.Fields.List {
+
+				for i := 0; i < len(structType.Fields.List); i++ {
+					fi := structType.Fields.List[i]
 					fie := field{}
-					isLoggable := true
 					if fi.Tag != nil && fi.Tag.Value != "" && strings.Contains(fi.Tag.Value, "notloggable") {
-						isLoggable = false
-						break
-					}
-					if !isLoggable {
-						// respect the tag to not include in final logging
 						continue
+
 					}
+
 					for _, ind := range fi.Names {
 						fie.key = strcase.ToSnake(ind.Name)
 						fie.fieldName = ind.Name
